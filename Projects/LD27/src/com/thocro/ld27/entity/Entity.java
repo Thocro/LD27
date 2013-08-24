@@ -10,7 +10,7 @@ public class Entity {
 
 	public TextureRegion text;
 
-	protected Level level;
+	public Level level;
 
 	public Entity(TextureRegion text, int x, int y, int w, int h, Level level) {
 		this.text = text;
@@ -25,7 +25,7 @@ public class Entity {
 		sb.draw(text, x + xo, y + yo, w, h);
 	}
 
-	public void update(float delta) {
+	public void update(float delta, Level l) {
 
 	}
 }

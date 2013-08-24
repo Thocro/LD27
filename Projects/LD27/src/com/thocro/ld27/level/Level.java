@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.thocro.ld27.entity.Entity;
+import com.thocro.ld27.entity.mob.Player;
 import com.thocro.ld27.level.tile.FloorTile;
 import com.thocro.ld27.level.tile.Tile;
 
@@ -13,6 +14,8 @@ public class Level {
 	public Tile[] tiles;
 
 	public ArrayList<Entity> entities;
+
+	public Player player;
 
 	public Level(int width, int height) {
 		this.width = width;
@@ -30,24 +33,32 @@ public class Level {
 				tiles[x + y * width].render(sb, xo + (x * 32), yo + (y * 32), 32, 32);
 			}
 		}
+		if (player != null)
+			player.render(sb, xo, yo);
 		for (Entity e : entities) {
 			e.render(sb, xo, yo);
 		}
 	}
 
 	public void update(float delta) {
+		if (player != null)
+			player.update(delta, this);
 		for (Entity e : entities) {
-			e.update(delta);
+			e.update(delta, this);
 		}
 
 	}
 
-	public void add(Entity e) {
-		entities.add(e);
+	public Player getPlayer() {
+		return (Player) entities.get(0);
 	}
 
-	public void remove(Entity e) {
-		entities.remove(e);
+	public void add(Player p) {
+		player = p;
+	}
+
+	public void remove(Player p) {
+		player = null;
 	}
 
 }
