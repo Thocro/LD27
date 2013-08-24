@@ -8,6 +8,10 @@ public class Mob extends Entity {
 
 	public int dir;
 	public boolean moving;
+	
+	
+	public int health = 200;
+	public int attackRadius = 40, attack = 20, defence = 10;
 
 	public Mob(TextureRegion text, int x, int y, int w, int h, Level l) {
 		super(text, x, y, w, h, l);

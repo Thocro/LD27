@@ -1,0 +1,4 @@
+1 - Welcome test subject 37B Today you will help us with our new pain experiment. We are so glad that you 'agreed to help'.
+	-------Stage 1: Flee-------
+2 - As you can see there are 2 rooms, the first a pit of zombies, the other a safe haven.
+3 - Every 10seconds you will switch room, your only goal is to survive.

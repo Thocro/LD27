@@ -8,10 +8,13 @@ import com.thocro.ld27.level.tile.Tile;
 
 public class Zombie extends Mob {
 	public float speed = 70;
-	private float animCount;
-	private int currentFrame = 1;
+	// private float animCount;
+	// private int currentFrame = 1;
 
 	private int txtId;
+
+	private float attackCounterCount;
+	private boolean attackCounter;
 
 	private static TextureRegion tx1 = new TextureRegion(Tile.tileSheet, 64, 4 * 8, 16, 16);
 	private static TextureRegion tx2 = new TextureRegion(Tile.tileSheet, 64 + 16, 4 * 8, 16, 16);
@@ -35,6 +38,15 @@ public class Zombie extends Mob {
 	int xa = 0, ya = 0;
 
 	public void update(float delta, Level l) {
+		if (attackCounter) {
+			attackCounterCount += delta;
+			if (attackCounterCount >= 0.2f) {
+				attackCounter = false;
+				attackCounterCount -= 0.2f;
+			}
+		}
+
+		testAttacks(delta, l);
 		if (txtId == 1) {
 			if (dir == 1)
 				text = tx1;
@@ -72,6 +84,23 @@ public class Zombie extends Mob {
 			move(xa, ya);
 		}
 
+	}
+
+	private void testAttacks(float delta, Level l) {
+		if (!attackCounter) {
+			Player p = l.getPlayer();
+			if (p != null) {
+				int px = p.x;
+				int py = p.y;
+				if (!p.dead) {
+					if (Math.abs(px - x) <= attackRadius && Math.abs(py - y) <= attackRadius) {
+						System.out.println("Hit player");
+						p.health -= (attack - p.defence);
+						attackCounter = true;
+					}
+				}
+			}
+		}
 	}
 
 }

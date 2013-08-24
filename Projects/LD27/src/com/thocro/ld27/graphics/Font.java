@@ -11,8 +11,8 @@ public class Font {
 
 	private static String chars = "" + //
 			"ABCDEFGHIJKLMNOP" + //
-			"QRSTUVWXYZ      " + //
-			"1234567890.,!:  ";//
+			"QRSTUVWXYZ;()?-=" + //
+			"1234567890.,!:'\"";//
 	private static ArrayList<TextureRegion> font;
 
 	public static void load() {

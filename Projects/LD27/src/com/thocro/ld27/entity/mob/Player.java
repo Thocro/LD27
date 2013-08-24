@@ -1,9 +1,13 @@
 package com.thocro.ld27.entity.mob;
 
+import java.awt.List;
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.thocro.ld27.entity.Entity;
 import com.thocro.ld27.level.Level;
 import com.thocro.ld27.level.tile.Tile;
 
@@ -12,6 +16,7 @@ public class Player extends Mob {
 	public float speed = 120;
 	private float animCount;
 	private int currentFrame = 1;
+	public int maxHealth = 200;
 
 	private static TextureRegion tx1 = new TextureRegion(Tile.tileSheet, 0, 4 * 8, 16, 16);
 	private static TextureRegion tx2 = new TextureRegion(Tile.tileSheet, 16, 4 * 8, 16, 16);
@@ -35,6 +40,8 @@ public class Player extends Mob {
 
 	public Player(int x, int y, Level l) {
 		super(tx1, x, y, 64, 64, l);
+		attackRadius = 50;
+		attack = 50;
 	}
 
 	public void update(float delta, Level l) {
@@ -133,6 +140,19 @@ public class Player extends Mob {
 			xa = (int) (xa * speed * delta);
 			ya = (int) (ya * speed * delta);
 			move(xa, ya);
+		}
+	}
+
+	public void attack(Level l) {
+		ArrayList<Entity> mobs = l.entities;
+		for (Entity e : mobs) {
+			if (e instanceof Mob)
+				if (!((Mob) e).dead) {
+					if (Math.abs(e.x - x) <= attackRadius && Math.abs(e.y - y) <= attackRadius) {
+						((Mob) e).health -= (attack - ((Mob) e).defence);
+						System.out.println("Attacked mob");
+					}
+				}
 		}
 	}
 

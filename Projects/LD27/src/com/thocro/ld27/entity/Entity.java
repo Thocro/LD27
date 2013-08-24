@@ -9,6 +9,7 @@ public class Entity {
 	public int w, h;
 
 	public TextureRegion text;
+	public boolean dead;
 
 	public Level level;
 
