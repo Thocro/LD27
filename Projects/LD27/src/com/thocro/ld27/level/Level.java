@@ -17,7 +17,7 @@ public class Level {
 	public ArrayList<Entity> entities;
 
 	public Player player;
-	
+
 	public boolean playerDead;
 
 	public Level(int width, int height) {
@@ -52,9 +52,12 @@ public class Level {
 			e.update(delta, this);
 			if (e instanceof Mob) {
 				if (((Mob) e).health <= 0) {
+					if (player != null) {
+						player.money += 10;
+					}
 					e.dead = true;
 					entities.remove(e);
-					if(e instanceof Player)
+					if (e instanceof Player)
 						playerDead = true;
 					System.out.println("Mob died");
 					return;
@@ -68,7 +71,6 @@ public class Level {
 		}
 
 	}
-
 
 	public void clearLevel() {
 		entities.clear();

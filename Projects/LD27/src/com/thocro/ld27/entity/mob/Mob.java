@@ -21,14 +21,14 @@ public class Mob extends Entity {
 		x += xa;
 		y += ya;
 
-		if (x < 0)
-			x = 0;
+		if (x < -15)
+			x = -15;
 		if (y < 0)
 			y = 0;
-		if (x > (level.width * 32) - w)
-			x = (level.width * 32) - w;
-		if (y > (level.height * 32) - h)
-			y = (level.height * 32) - h;
+		if (x > (level.width * 32) - w + 15) 
+			x = (level.width * 32) - w + 15;
+		if (y > (level.height * 32) - h + 25)
+			y = (level.height * 32) - h + 25;
 
 		if (xa > 0)
 			dir = 2;

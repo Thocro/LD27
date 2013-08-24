@@ -99,11 +99,11 @@ public class InGameUI {
 		sb.draw(guiCorner3, xo, yo, 32, 32);
 		sb.draw(guiCorner4, xo + w, yo, 32, 32);
 
-//		Font.draw("GAME", sb, xo + 100, yo + h, 32);
-//		Font.draw("PAUSED", sb, xo + 65, yo + h - 40, 32);
+		// Font.draw("GAME", sb, xo + 100, yo + h, 32);
+		// Font.draw("PAUSED", sb, xo + 65, yo + h - 40, 32);
 
-//		Font.draw("PRESS ESCAPE TO", sb, xo + 40, yo + h - 80, 16);
-//		Font.draw("RESUME THE GAME", sb, xo + 40, yo + h - 110, 16);
+		// Font.draw("PRESS ESCAPE TO", sb, xo + 40, yo + h - 80, 16);
+		// Font.draw("RESUME THE GAME", sb, xo + 40, yo + h - 110, 16);
 
 	}
 
@@ -111,6 +111,11 @@ public class InGameUI {
 		renderHealthBar(sb, game);
 		renderTimeBar(sb, game);
 		renderMessageBox(sb, game);
+		Font.draw("" + game.player.money, sb, 500, Game.HEIGHT - 53, 24);
+		if (game.player.money < 100)
+			sb.draw(coin, 550, Game.HEIGHT - 60, 32, 32);
+		else
+			sb.draw(coin, 570, Game.HEIGHT - 60, 32, 32);
 	}
 
 	private TextureRegion barEdge1 = new TextureRegion(Tile.tileSheet, 9 * 8, 12 * 8, 8, 8);
@@ -120,12 +125,12 @@ public class InGameUI {
 
 	public void renderHealthBar(SpriteBatch sb, GameState game) {
 		int w = 200;
-		int xo = 20, yo = Game.HEIGHT - 70;
+		int xo = 20, yo = Game.HEIGHT - 60;
 		int health = game.getCurrentLevel().getPlayer().health;
 		int maxHealth = 200;
 		int blocks = w - 64;
-		
-		Font.draw("HEALTH:", sb, 20, 450, 16);
+
+		Font.draw("HEALTH:", sb, 20, 458, 16);
 
 		sb.draw(barEdge1, xo, yo, 32, 32);
 
@@ -144,10 +149,10 @@ public class InGameUI {
 
 	public void renderTimeBar(SpriteBatch sb, GameState game) {
 		int w = 200;
-		int xo = 260, yo = Game.HEIGHT - 70;
+		int xo = 260, yo = Game.HEIGHT - 60;
 		float time = 10f - game.swapTimer;
 		int blocks = w - 64;
-		Font.draw("TIME LEFT:", sb, 260, 450, 16);
+		Font.draw("TIME LEFT:", sb, 260, 458, 16);
 
 		sb.draw(barEdge1, xo, yo, 32, 32);
 
@@ -201,6 +206,7 @@ public class InGameUI {
 	}
 
 	private TextureRegion coin = new TextureRegion(Tile.tileSheet, 4 * 8, 1 * 8, 8, 8);
+	private TextureRegion buy = new TextureRegion(Tile.tileSheet, 4 * 8, 2 * 8, 4 * 8, 2 * 8);
 
 	public void renderShop(SpriteBatch sb, GameState gameState) {
 		int w = 512 + 200;
@@ -248,13 +254,15 @@ public class InGameUI {
 
 		Font.draw("REGENERATE  ", sb, xo + 560, yo + h - 85, 16);
 		Font.draw("ALL HEALTH", sb, xo + 560, yo + h - 115, 16);
-		Font.draw("100", sb, xo + 600, yo + h - 145, 16);
-		sb.draw(coin, xo + 650, yo + h - 147, 16, 16);
+		Font.draw("100", sb, xo + 560, yo + h - 145, 16);
+		sb.draw(coin, xo + 608, yo + h - 147, 16, 16);
+		sb.draw(buy, xo + 625, yo + h - 153, 64, 32);
 
 		Font.draw("KILL ALL", sb, xo + 560, yo + h - 195, 16);
 		Font.draw("ZOMBIES", sb, xo + 560, yo + h - 225, 16);
-		Font.draw("300", sb, xo + 600, yo + h - 255, 16);
-		sb.draw(coin, xo + 650, yo + h - 257, 16, 16);
+		Font.draw("300", sb, xo + 560, yo + h - 255, 16);
+		sb.draw(coin, xo + 608, yo + h - 257, 16, 16);
+		sb.draw(buy, xo + 625, yo + h - 263, 64, 32);
 
 		sb.draw(coin, xo + 680, yo + h - 0, 32, 32);
 

@@ -17,6 +17,8 @@ public class Player extends Mob {
 	private float animCount;
 	private int currentFrame = 1;
 	public int maxHealth = 200;
+	
+	public int money = 10;
 
 	private static TextureRegion tx1 = new TextureRegion(Tile.tileSheet, 0, 4 * 8, 16, 16);
 	private static TextureRegion tx2 = new TextureRegion(Tile.tileSheet, 16, 4 * 8, 16, 16);
@@ -40,8 +42,8 @@ public class Player extends Mob {
 
 	public Player(int x, int y, Level l) {
 		super(tx1, x, y, 64, 64, l);
-		attackRadius = 50;
-		attack = 30;
+		attackRadius = 60;
+		attack = 40;
 	}
 
 	public void update(float delta, Level l) {
@@ -151,6 +153,7 @@ public class Player extends Mob {
 					if (Math.abs(e.x - x) <= attackRadius && Math.abs(e.y - y) <= attackRadius) {
 						((Mob) e).health -= (attack - ((Mob) e).defence);
 						System.out.println("Attacked mob");
+						
 					}
 				}
 		}
