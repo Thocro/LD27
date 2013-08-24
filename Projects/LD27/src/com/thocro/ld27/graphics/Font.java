@@ -12,7 +12,7 @@ public class Font {
 	private static String chars = "" + //
 			"ABCDEFGHIJKLMNOP" + //
 			"QRSTUVWXYZ      " + //
-			"1234567890.,!   ";//
+			"1234567890.,!:  ";//
 	private static ArrayList<TextureRegion> font;
 
 	public static void load() {
@@ -74,7 +74,6 @@ public class Font {
 		for (int i = 0; i < text.length(); i++) {
 			char c = text.charAt(i);
 			int index = chars.indexOf(c);
-			System.out.println(c + " : " + index);
 			if (index >= 0)
 				sb.draw(font.get(index), x + i * size, y, size, size);
 		}
