@@ -41,7 +41,7 @@ public class Player extends Mob {
 	public Player(int x, int y, Level l) {
 		super(tx1, x, y, 64, 64, l);
 		attackRadius = 50;
-		attack = 50;
+		attack = 30;
 	}
 
 	public void update(float delta, Level l) {

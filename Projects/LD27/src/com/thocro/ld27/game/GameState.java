@@ -7,6 +7,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.thocro.ld27.Game;
+import com.thocro.ld27.entity.ShopEntity;
 import com.thocro.ld27.entity.mob.Player;
 import com.thocro.ld27.entity.mob.Zombie;
 import com.thocro.ld27.graphics.Font;
@@ -20,9 +21,9 @@ public class GameState implements State, InputProcessor {
 
 	public Level level1, level2;
 	public Player player;
-	private int currentLevel = 1;
+	private int currentLevel = 2;
 
-	private float swapTimer;
+	public float swapTimer;
 
 	public boolean paused = false, internallyPaused = false;
 
@@ -31,19 +32,22 @@ public class GameState implements State, InputProcessor {
 	public boolean playerDead = false;
 
 	public int currentStage = 1;
-	public int currentSwap = 0;
+	public int currentSwap = 1;
 
 	public int mode;
 
+	public ShopEntity shop;
+
 	public void enter() {
 		Gdx.input.setInputProcessor(this);
-		level1 = new Level(11, 10);
-		level2 = new Level(11, 10);
-		player = new Player(10, 10, level1);
-		level1.add(player);
+		level1 = new Level(12, 12);
+		level2 = new Level(11, 8);
+		player = new Player(10, 10, level2);
+		level2.add(player);
 		ui = new InGameUI();
 		Font.load();
-		addZombie(5);
+		addZombie(10);
+		shop = new ShopEntity(200, 0, level2);
 	}
 
 	Random rand = new Random();
@@ -60,21 +64,29 @@ public class GameState implements State, InputProcessor {
 
 	public void render(SpriteBatch sb) {
 		level1.render(sb, 10, 10);
-		level2.render(sb, 436, 10);
+		level2.render(sb, 436, 138);
+		shop.render(sb, 436, 138);
 
-		Font.draw("FPS: " + Gdx.graphics.getFramesPerSecond(), sb, 0, Game.HEIGHT - 16, 16);
-		Font.draw("TIME: " + (int) swapTimer, sb, 300, Game.HEIGHT - 32, 16);
-		Font.draw("HEALTH: " + player.health, sb, 500, Game.HEIGHT - 32, 16);
+		Font.draw("STAGE: " + currentStage, sb, 500, Game.HEIGHT - 30, 16);
 
-		
+		Font.draw("LEVEL: " + currentSwap, sb, 650, Game.HEIGHT - 30, 16);
+
 		ui.renderOverlay(sb, this);
 
 		if (playerDead) {
 			ui.renderDeathScreen(sb);
 		}
-		
+
 		if (paused) {
 			ui.renderPauseScreen(sb);
+		}
+
+		if (shop.open) {
+			if (!internallyPaused) {
+				internallyPaused = true;
+			} else {
+				ui.renderShop(sb, this);
+			}
 		}
 	}
 
@@ -89,6 +101,8 @@ public class GameState implements State, InputProcessor {
 				swapPlayer();
 				swapTimer -= 10;
 			}
+
+			shop.update(delta, level2);
 		}
 
 		if (currentLevel == 2) {
@@ -119,13 +133,13 @@ public class GameState implements State, InputProcessor {
 	}
 
 	private void resetGame() {
-		level1 = new Level(11, 10);
-		level2 = new Level(11, 10);
+		level1 = new Level(12, 12);
+		level2 = new Level(11, 8);
 		player = new Player(10, 10, level1);
 		level1.add(player);
 		ui = new InGameUI();
 		Font.load();
-		addZombie(5);
+		addZombie(10);
 		mode = 0;
 		currentStage = 1;
 		currentSwap = 0;
@@ -140,6 +154,7 @@ public class GameState implements State, InputProcessor {
 		if (currentLevel == 1) {
 			level1.remove(player);
 			player.level = level2;
+			player.x = 100;
 			level2.add(player);
 			currentLevel = 2;
 		} else if (currentLevel == 2) {
@@ -150,9 +165,9 @@ public class GameState implements State, InputProcessor {
 
 			currentSwap++;
 			if (currentSwap < 5) {
-				addZombie(2);
-			} else if (currentSwap < 10) {
 				addZombie(3);
+			} else if (currentSwap < 10) {
+				addZombie(5);
 			}
 		}
 		System.out.println("Player swapped to level " + currentLevel);
@@ -175,6 +190,12 @@ public class GameState implements State, InputProcessor {
 		if (keycode == Keys.ESCAPE) {
 			if (mode == MODE_DEAD) {
 				resetGame();
+			} else if (shop.open) {
+				shop.open = false;
+				internallyPaused = false;
+				player.y += 5;
+				player.x -= 5;
+
 			} else {
 				paused = !paused;
 			}
