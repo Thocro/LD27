@@ -1,0 +1,7 @@
+Idea:
+-2 Levels with 2 Players
+-Every 10 seconds switch to other level
+-Try to beat player?
+
+-Single player -against pc?
+-2 Player -different keys?

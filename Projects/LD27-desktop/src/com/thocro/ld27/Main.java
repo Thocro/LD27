@@ -7,11 +7,12 @@ public class Main {
 	public static void main(String[] args) {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		Game game = new Game();
-		cfg.title = game.TITLE;
+		cfg.title = Game.TITLE;
 		cfg.useGL20 = false;
-		cfg.width = game.WIDTH;
-		cfg.height = game.HEIGHT;
-		cfg.fullscreen = game.FULLSCREEN;
+		cfg.width = Game.WIDTH;
+		cfg.height = Game.HEIGHT;
+		cfg.fullscreen = Game.FULLSCREEN;
+		cfg.resizable = false;
 
 		new LwjglApplication(game, cfg);
 	}
