@@ -2,8 +2,10 @@ package com.thocro.ld27.story;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.thocro.ld27.game.GameState;
 import com.thocro.ld27.graphics.Font;
+import com.thocro.ld27.level.tile.Tile;
 
 public class StoryManager {
 
@@ -35,11 +37,15 @@ public class StoryManager {
 
 	}
 
+	private TextureRegion arrow = new TextureRegion(Tile.tileSheet, 3 * 8, 1 * 8, 8, 8);
+
 	public void render(SpriteBatch sb, int xo, int yo) {
 		if (frame == 1) {
 			Font.draw("WELCOME TEST SUBJECT", sb, xo - 0, yo + 55, 16);
 			Font.draw("10S TO OUR NEW TEST!", sb, xo - 0, yo + 30, 16);
 			Font.draw("PRESS SPACE TO CONT", sb, xo - 0, yo + 4, 16);
+			sb.draw(arrow, xo - 100, yo + 100, 128, 128);
+
 		} else if (frame == 2) {
 			Font.draw("IN HERE THERE ARE 2", sb, xo - 0, yo + 55, 16);
 			Font.draw("ROOMS, ONE IS SAFE!", sb, xo - 0, yo + 30, 16);

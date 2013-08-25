@@ -18,6 +18,7 @@ import com.thocro.ld27.level.Level;
 import com.thocro.ld27.level.tile.Tile;
 import com.thocro.ld27.shop.ArmourShop;
 import com.thocro.ld27.shop.WeaponShop;
+import com.thocro.ld27.sound.SoundManager;
 import com.thocro.ld27.state.State;
 import com.thocro.ld27.story.StoryManager;
 import com.thocro.ld27.ui.InGameUI;
@@ -46,9 +47,6 @@ public class GameState implements State, InputProcessor {
 	public WeaponShop wShop;
 	public ArmourShop aShop;
 
-	public Sound zombie1, zombie2, zombie3;
-	public Music bg1;
-
 	public StoryManager story;
 
 	public void enter() {
@@ -66,15 +64,7 @@ public class GameState implements State, InputProcessor {
 		wShop = new WeaponShop(200, 0, level2);
 		aShop = new ArmourShop(100, 0, level2);
 
-		zombie1 = Gdx.audio.newSound(Gdx.files.internal("sound/zombie1.mp3"));
-		zombie2 = Gdx.audio.newSound(Gdx.files.internal("sound/zombie2.mp3"));
-		zombie3 = Gdx.audio.newSound(Gdx.files.internal("sound/zombie3.mp3"));
-
-		// bg1 = Gdx.audio.newMusic(Gdx.files.internal("sound/bg1.mp3"));
-		// bg1.setVolume(0.2f);
-		// bg1.play();
-		// bg1.setLooping(true);
-
+		SoundManager.load();
 	}
 
 	Random rand = new Random();
@@ -133,8 +123,6 @@ public class GameState implements State, InputProcessor {
 		}
 	}
 
-	private TextureRegion wallEnd1 = new TextureRegion(Tile.tileSheet, 5 * 8, 1 * 8, 8, 8);
-	private TextureRegion wallEnd2 = new TextureRegion(Tile.tileSheet, 6 * 8, 1 * 8, 8, 8);
 	private TextureRegion wall1 = new TextureRegion(Tile.tileSheet, 7 * 8, 1 * 8, 8, 8);
 	private TextureRegion wall2 = new TextureRegion(Tile.tileSheet, 8 * 8, 1 * 8, 8, 8);
 	private TextureRegion wallCorner1 = new TextureRegion(Tile.tileSheet, 9 * 8, 1 * 8, 8, 8);
@@ -217,13 +205,13 @@ public class GameState implements State, InputProcessor {
 
 	private void updateSound() {
 		if (rand.nextInt(100) == 1) {
-			zombie1.play();
+			SoundManager.zombie1.play();
 		}
 		if (rand.nextInt(500) == 1) {
-			zombie2.play(0.5f);
+			SoundManager.zombie2.play(0.5f);
 		}
 		if (rand.nextInt(200) == 1) {
-			zombie3.play();
+			SoundManager.zombie3.play();
 		}
 	}
 
@@ -272,12 +260,27 @@ public class GameState implements State, InputProcessor {
 			currentLevel = 2;
 
 			currentSwap++;
-			if (currentSwap < 5) {
+			if (currentSwap > 5) {
+				currentStage++;
+				currentSwap = 1;
+			}
+			if (currentStage == 1) {
 				addZombie(3);
+				addSandWarrior(1);
 				player.money += 20;
-			} else if (currentSwap < 10) {
+			} else if (currentStage == 2) {
 				addZombie(5);
+				addSandWarrior(2);
+				player.money += 30;
+			} else if (currentStage == 3) {
+				addZombie(7);
+				addSandWarrior(4);
 				player.money += 40;
+			} else {
+				addZombie(10);
+				addSandWarrior(5);
+				player.money += 50;
+
 			}
 		} else if (currentLevel == 2) {
 			level2.remove(player);

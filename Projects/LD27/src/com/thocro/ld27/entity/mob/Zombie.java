@@ -5,6 +5,7 @@ import java.util.Random;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.thocro.ld27.level.Level;
 import com.thocro.ld27.level.tile.Tile;
+import com.thocro.ld27.sound.SoundManager;
 
 public class Zombie extends Mob {
 	public float speed = 70;
@@ -97,6 +98,8 @@ public class Zombie extends Mob {
 						System.out.println("Hit player");
 						p.health -= (attack - p.defence);
 						attackCounter = true;
+						SoundManager.hit.play();
+
 					}
 				}
 			}

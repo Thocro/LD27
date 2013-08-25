@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.thocro.ld27.entity.Entity;
 import com.thocro.ld27.level.Level;
 import com.thocro.ld27.level.tile.Tile;
+import com.thocro.ld27.sound.SoundManager;
 
 public class Player extends Mob {
 
@@ -261,9 +262,10 @@ public class Player extends Mob {
 					if (Math.abs(e.x - x) <= attackRadius && Math.abs(e.y - y) <= attackRadius) {
 						((Mob) e).health -= (attack - ((Mob) e).defence);
 						System.out.println("Attacked mob");
-
+						SoundManager.hit2.play();
 					}
 				}
+
 		}
 	}
 
