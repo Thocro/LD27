@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.thocro.ld27.Game;
 import com.thocro.ld27.entity.mob.Player;
+import com.thocro.ld27.entity.mob.SandWarrior;
 import com.thocro.ld27.entity.mob.Zombie;
 import com.thocro.ld27.graphics.Font;
 import com.thocro.ld27.level.Level;
@@ -18,6 +19,7 @@ import com.thocro.ld27.level.tile.Tile;
 import com.thocro.ld27.shop.ArmourShop;
 import com.thocro.ld27.shop.WeaponShop;
 import com.thocro.ld27.state.State;
+import com.thocro.ld27.story.StoryManager;
 import com.thocro.ld27.ui.InGameUI;
 
 public class GameState implements State, InputProcessor {
@@ -47,6 +49,8 @@ public class GameState implements State, InputProcessor {
 	public Sound zombie1, zombie2, zombie3;
 	public Music bg1;
 
+	public StoryManager story;
+
 	public void enter() {
 		Gdx.input.setInputProcessor(this);
 		level1 = new Level(11, 11);
@@ -55,8 +59,10 @@ public class GameState implements State, InputProcessor {
 		player.money = 0;
 		level2.add(player);
 		ui = new InGameUI();
+		story = new StoryManager();
 		Font.load();
-		addZombie(10);
+		addZombie(5);
+		addSandWarrior(1);
 		wShop = new WeaponShop(200, 0, level2);
 		aShop = new ArmourShop(100, 0, level2);
 
@@ -64,8 +70,8 @@ public class GameState implements State, InputProcessor {
 		zombie2 = Gdx.audio.newSound(Gdx.files.internal("sound/zombie2.mp3"));
 		zombie3 = Gdx.audio.newSound(Gdx.files.internal("sound/zombie3.mp3"));
 
-		bg1 = Gdx.audio.newMusic(Gdx.files.internal("sound/bg1.mp3"));
-		bg1.setVolume(0.2f);
+		// bg1 = Gdx.audio.newMusic(Gdx.files.internal("sound/bg1.mp3"));
+		// bg1.setVolume(0.2f);
 		// bg1.play();
 		// bg1.setLooping(true);
 
@@ -76,6 +82,12 @@ public class GameState implements State, InputProcessor {
 	private void addZombie(int i) {
 		for (int j = 0; j < i; j++) {
 			level1.entities.add(new Zombie(rand.nextInt(250), rand.nextInt(250), level1));
+		}
+	}
+
+	private void addSandWarrior(int i) {
+		for (int j = 0; j < i; j++) {
+			level1.entities.add(new SandWarrior(rand.nextInt(250), rand.nextInt(250), level1));
 		}
 	}
 
@@ -95,6 +107,7 @@ public class GameState implements State, InputProcessor {
 		Font.draw("LEVEL: " + currentSwap, sb, 650, Game.HEIGHT - 20, 16);
 
 		ui.renderOverlay(sb, this);
+		story.render(sb, 450, 30);
 
 		if (playerDead) {
 			ui.renderDeathScreen(sb);
@@ -168,6 +181,7 @@ public class GameState implements State, InputProcessor {
 
 	public void update(float delta) {
 		updateSound();
+		story.update(delta, this);
 		if (!paused && !internallyPaused) {
 			pollInput(delta);
 			level1.update(delta);
@@ -175,7 +189,7 @@ public class GameState implements State, InputProcessor {
 
 			swapTimer += delta;
 			if (swapTimer >= 10) {
-				 swapPlayer();
+				swapPlayer();
 				swapTimer -= 10;
 			}
 
@@ -224,17 +238,24 @@ public class GameState implements State, InputProcessor {
 	}
 
 	private void resetGame() {
+		Gdx.input.setInputProcessor(this);
 		level1 = new Level(11, 11);
 		level2 = new Level(11, 7);
-		player = new Player(10, 10, level1);
-		level1.add(player);
+		player = new Player(10, 10, level2);
+		player.money = 0;
+		level2.add(player);
 		ui = new InGameUI();
+		story = new StoryManager();
 		Font.load();
-		addZombie(10);
+		addZombie(5);
+		addSandWarrior(1);
+		wShop = new WeaponShop(200, 0, level2);
+		aShop = new ArmourShop(100, 0, level2);
+
 		mode = 0;
 		currentStage = 1;
 		currentSwap = 1;
-		currentLevel = 1;
+		currentLevel = 2;
 		playerDead = false;
 		internallyPaused = false;
 		paused = false;
@@ -281,7 +302,8 @@ public class GameState implements State, InputProcessor {
 	}
 
 	public boolean keyDown(int keycode) {
-		if (keycode == Keys.ESCAPE) {
+		story.keyPressed(keycode);
+		if (keycode == Keys.ESCAPE || keycode == Keys.DEL) {
 			if (mode == MODE_DEAD) {
 				resetGame();
 			} else if (aShop.open) {
@@ -322,16 +344,25 @@ public class GameState implements State, InputProcessor {
 				int cost = 100;
 				if (player.money >= cost) {
 					player.money -= cost;
+					player.defence = 15;
+					player.armour = 1;
+					System.out.println("Player Bought Rusty Shield");
 				}
 			} else if (ui.aIron.contains(screenX, screenY)) {
 				int cost = 250;
 				if (player.money >= cost) {
 					player.money -= cost;
+					player.defence = 20;
+					player.armour = 2;
+					System.out.println("Player Bought Iron Shield");
 				}
 			} else if (ui.aGold.contains(screenX, screenY)) {
 				int cost = 400;
 				if (player.money >= cost) {
 					player.money -= cost;
+					player.defence = 25;
+					player.armour = 3;
+					System.out.println("Player Bought Gold Shield");
 				}
 			}
 		} else if (wShop.open) {
@@ -339,16 +370,25 @@ public class GameState implements State, InputProcessor {
 				int cost = 100;
 				if (player.money >= cost) {
 					player.money -= cost;
+					player.attack = 50;
+					player.weapon = 1;
+					System.out.println("Player Bought Rusty Sword");
 				}
 			} else if (ui.wIron.contains(screenX, screenY)) {
 				int cost = 250;
 				if (player.money >= cost) {
 					player.money -= cost;
+					player.attack = 75;
+					player.weapon = 2;
+					System.out.println("Player Bought Iron Sword");
 				}
 			} else if (ui.wGold.contains(screenX, screenY)) {
 				int cost = 400;
 				if (player.money >= cost) {
 					player.money -= cost;
+					player.attack = 100;
+					player.weapon = 3;
+					System.out.println("Player Bought Gold Sword");
 				}
 			}
 		}

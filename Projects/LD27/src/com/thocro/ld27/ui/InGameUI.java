@@ -127,7 +127,7 @@ public class InGameUI {
 	public void renderHealthBar(SpriteBatch sb, GameState game) {
 		int w = 200;
 		int xo = 20, yo = Game.HEIGHT - 60;
-		int health = game.getCurrentLevel().getPlayer().health;
+		int health = game.player.health;
 		int maxHealth = 200;
 		int blocks = w - 64;
 
@@ -210,9 +210,9 @@ public class InGameUI {
 	private TextureRegion buy = new TextureRegion(Tile.tileSheet, 4 * 8, 2 * 8, 4 * 8, 2 * 8);
 	
 
-	public Rectangle wRust = new Rectangle(120 + 35, 80 + 256 - 200, 128, 64);
-	public Rectangle wIron = new Rectangle(120 + 210, 80 + 256 - 200, 128, 64);
-	public Rectangle wGold = new Rectangle(120 + 390, 80 + 256 - 200, 128, 64);
+	public Rectangle wRust = new Rectangle(120 + 35, 30 + 360 - 200, 128, 64);
+	public Rectangle wIron = new Rectangle(120 + 210, 30 + 360 - 200, 128, 64);
+	public Rectangle wGold = new Rectangle(120 + 390, 30 + 360 - 200, 128, 64);
 
 	private TextureRegion wRustText = new TextureRegion(Tile.tileSheet, 11 * 8, 2 * 8, 8, 8);
 	private TextureRegion wIronText = new TextureRegion(Tile.tileSheet, 12 * 8, 2 * 8, 8, 8);
@@ -280,13 +280,13 @@ public class InGameUI {
 
 	}
 	
-	public Rectangle aRust = new Rectangle(120 + 35, 80 + 256 - 200, 128, 64);
-	public Rectangle aIron = new Rectangle(120 + 210, 80 + 256 - 200, 128, 64);
-	public Rectangle aGold = new Rectangle(120 + 390, 80 + 256 - 200, 128, 64);
+	public Rectangle aRust = new Rectangle(120 + 35, 30 + 360 - 200, 128, 64);
+	public Rectangle aIron = new Rectangle(120 + 210, 30 + 360 - 200, 128, 64);
+	public Rectangle aGold = new Rectangle(120 + 390, 30 + 360 - 200, 128, 64);
 	
-	private TextureRegion aRustText = new TextureRegion(Tile.tileSheet, 11 * 8, 3 * 8, 8, 8);
-	private TextureRegion aIronText = new TextureRegion(Tile.tileSheet, 12 * 8, 3 * 8, 8, 8);
-	private TextureRegion aGoldText = new TextureRegion(Tile.tileSheet, 13 * 8, 3 * 8, 8, 8);
+	public TextureRegion aRustText = new TextureRegion(Tile.tileSheet, 11 * 8, 3 * 8, 8, 8);
+	public TextureRegion aIronText = new TextureRegion(Tile.tileSheet, 12 * 8, 3 * 8, 8, 8);
+	public TextureRegion aGoldText = new TextureRegion(Tile.tileSheet, 13 * 8, 3 * 8, 8, 8);
 
 	
 	public void renderArmourShop(SpriteBatch sb, GameState gameState) {

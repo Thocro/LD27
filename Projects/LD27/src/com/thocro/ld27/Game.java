@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.thocro.ld27.game.GameState;
+import com.thocro.ld27.menu.MainMenu;
 import com.thocro.ld27.state.State;
 
 public class Game implements ApplicationListener {
@@ -23,7 +24,7 @@ public class Game implements ApplicationListener {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800, 480);
 		batch = new SpriteBatch();
-		changeState(new GameState());
+		changeState(new MainMenu());
 		init();
 	}
 

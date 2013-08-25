@@ -1,0 +1,15 @@
+d:war/:0:application/unknown
+d:data:0:application/unknown
+i:data/libgdx.png:54931:image/png
+d:sound:0:application/unknown
+a:sound/bg1.mp3:76067:application/unknown
+a:sound/bg2.mp3:202709:application/unknown
+a:sound/zombie1.mp3:19643:application/unknown
+a:sound/zombie2.mp3:25494:application/unknown
+a:sound/zombie3.mp3:29256:application/unknown
+d:textures:0:application/unknown
+i:textures/tiles.png:3357:image/png
+t:com/badlogic/gdx/graphics/g3d/shaders/default.fragment.glsl:3032:application/unknown
+t:com/badlogic/gdx/graphics/g3d/shaders/default.vertex.glsl:7973:application/unknown
+t:com/badlogic/gdx/utils/arial-15.fnt:21743:application/unknown
+i:com/badlogic/gdx/utils/arial-15.png:21814:image/png
