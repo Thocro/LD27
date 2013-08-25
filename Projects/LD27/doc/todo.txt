@@ -1,6 +1,6 @@
 -More Monsters DONE
 -Shop Icons DONE
 -Story HALF DONE
--Menu
--Render Weapons
+-Menu DONE
+-Render Weapons DONE
 -Special Attacks

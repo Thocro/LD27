@@ -182,6 +182,7 @@ public class GameState implements State, InputProcessor {
 	public void update(float delta) {
 		updateSound();
 		story.update(delta, this);
+
 		if (!paused && !internallyPaused) {
 			pollInput(delta);
 			level1.update(delta);
@@ -196,22 +197,22 @@ public class GameState implements State, InputProcessor {
 			wShop.update(delta, level2);
 			aShop.update(delta, level2);
 
-		}
-
-		if (currentLevel == 2) {
-			if (player.health < player.maxHealth) {
-				healthIncrement += 0.2f;
-				if (healthIncrement >= 1f) {
-					player.health++;
-					healthIncrement -= 1f;
+			if (currentLevel == 2) {
+				if (player.health < player.maxHealth) {
+					healthIncrement += 0.2f;
+					if (healthIncrement >= 1f) {
+						player.health++;
+						healthIncrement -= 1f;
+					}
 				}
+			}
+
+			if (player.dead) {
+				playerDied();
+				mode = MODE_DEAD;
 			}
 		}
 
-		if (player.dead) {
-			playerDied();
-			mode = MODE_DEAD;
-		}
 	}
 
 	private void updateSound() {
