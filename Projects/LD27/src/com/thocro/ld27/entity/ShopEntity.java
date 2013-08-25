@@ -24,8 +24,6 @@ public class ShopEntity extends Entity {
 		Player p = l.getPlayer();
 		if (p != null) {
 			if (!open) {
-				System.out.println(Math.abs(x - p.x));
-
 				if (Math.abs(x - p.x) <= w /2  && Math.abs(p.y - y) <= h) {
 					open = true;
 				}

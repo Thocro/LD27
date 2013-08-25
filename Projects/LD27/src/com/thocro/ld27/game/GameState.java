@@ -52,12 +52,13 @@ public class GameState implements State, InputProcessor {
 		level1 = new Level(11, 11);
 		level2 = new Level(11, 7);
 		player = new Player(10, 10, level2);
+		player.money = 0;
 		level2.add(player);
 		ui = new InGameUI();
 		Font.load();
 		addZombie(10);
 		wShop = new WeaponShop(200, 0, level2);
-		aShop = new ArmourShop(50, 0, level2);
+		aShop = new ArmourShop(100, 0, level2);
 
 		zombie1 = Gdx.audio.newSound(Gdx.files.internal("sound/zombie1.mp3"));
 		zombie2 = Gdx.audio.newSound(Gdx.files.internal("sound/zombie2.mp3"));
@@ -107,7 +108,14 @@ public class GameState implements State, InputProcessor {
 			if (!internallyPaused) {
 				internallyPaused = true;
 			} else {
-				ui.renderShop(sb, this);
+				ui.renderArmourShop(sb, this);
+			}
+		}
+		if (wShop.open) {
+			if (!internallyPaused) {
+				internallyPaused = true;
+			} else {
+				ui.renderWeaponShop(sb, this);
 			}
 		}
 	}
@@ -167,7 +175,7 @@ public class GameState implements State, InputProcessor {
 
 			swapTimer += delta;
 			if (swapTimer >= 10) {
-				// swapPlayer();
+				 swapPlayer();
 				swapTimer -= 10;
 			}
 
@@ -279,8 +287,14 @@ public class GameState implements State, InputProcessor {
 			} else if (aShop.open) {
 				aShop.open = false;
 				internallyPaused = false;
-				player.y += 5;
-				player.x -= 5;
+				player.y = 70;
+				player.x = 90;
+
+			} else if (wShop.open) {
+				wShop.open = false;
+				internallyPaused = false;
+				player.y = 70;
+				player.x = 190;
 
 			} else {
 				paused = !paused;
@@ -302,6 +316,42 @@ public class GameState implements State, InputProcessor {
 	}
 
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		screenY = Game.HEIGHT - screenY;
+		if (aShop.open) {
+			if (ui.aRust.contains(screenX, screenY)) {
+				int cost = 100;
+				if (player.money >= cost) {
+					player.money -= cost;
+				}
+			} else if (ui.aIron.contains(screenX, screenY)) {
+				int cost = 250;
+				if (player.money >= cost) {
+					player.money -= cost;
+				}
+			} else if (ui.aGold.contains(screenX, screenY)) {
+				int cost = 400;
+				if (player.money >= cost) {
+					player.money -= cost;
+				}
+			}
+		} else if (wShop.open) {
+			if (ui.wRust.contains(screenX, screenY)) {
+				int cost = 100;
+				if (player.money >= cost) {
+					player.money -= cost;
+				}
+			} else if (ui.wIron.contains(screenX, screenY)) {
+				int cost = 250;
+				if (player.money >= cost) {
+					player.money -= cost;
+				}
+			} else if (ui.wGold.contains(screenX, screenY)) {
+				int cost = 400;
+				if (player.money >= cost) {
+					player.money -= cost;
+				}
+			}
+		}
 		return false;
 	}
 

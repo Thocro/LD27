@@ -2,6 +2,7 @@ package com.thocro.ld27.ui;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.thocro.ld27.Game;
 import com.thocro.ld27.game.GameState;
 import com.thocro.ld27.graphics.Font;
@@ -207,18 +208,28 @@ public class InGameUI {
 
 	private TextureRegion coin = new TextureRegion(Tile.tileSheet, 4 * 8, 1 * 8, 8, 8);
 	private TextureRegion buy = new TextureRegion(Tile.tileSheet, 4 * 8, 2 * 8, 4 * 8, 2 * 8);
+	
 
-	public void renderShop(SpriteBatch sb, GameState gameState) {
-		int w = 512 + 200;
-		int h = 256 + 128;
+	public Rectangle wRust = new Rectangle(120 + 35, 80 + 256 - 200, 128, 64);
+	public Rectangle wIron = new Rectangle(120 + 210, 80 + 256 - 200, 128, 64);
+	public Rectangle wGold = new Rectangle(120 + 390, 80 + 256 - 200, 128, 64);
 
-		int xo = 10;
-		int yo = 20;
+	private TextureRegion wRustText = new TextureRegion(Tile.tileSheet, 11 * 8, 2 * 8, 8, 8);
+	private TextureRegion wIronText = new TextureRegion(Tile.tileSheet, 12 * 8, 2 * 8, 8, 8);
+	private TextureRegion wGoldText = new TextureRegion(Tile.tileSheet, 13 * 8, 2 * 8, 8, 8);
+
+	
+	public void renderWeaponShop(SpriteBatch sb, GameState gameState) {
+		int w = 512;
+		int h = 360;
+
+		int xo = 120;
+		int yo = 30;
 
 		int wa = w / 64;
 		int ha = h / 64;
 
-		for (int y = 1; y < ha; y++) {
+		for (int y = 1; y < ha  + 1; y++) {
 			for (int x = 1; x < wa + 1; x++) {
 				sb.draw(guiFill, xo + (x * 64), yo + (y * 64), 64, 64);
 			}
@@ -232,7 +243,7 @@ public class InGameUI {
 		sb.draw(guiEdge3, xo + wa * 64, yo + h, 32, 64);
 		sb.draw(guiEdge4, xo + wa * 64, yo, 32, 64);
 
-		for (int y = 1; y < ha; y++) {
+		for (int y = 1; y < ha + 1; y++) {
 			sb.draw(guiEdge1, xo, yo + y * 64, 64, 64);
 			sb.draw(guiEdge2, xo + w, yo + y * 64, 64, 64);
 		}
@@ -241,31 +252,103 @@ public class InGameUI {
 		sb.draw(guiCorner3, xo, yo, 64, 64);
 		sb.draw(guiCorner4, xo + w, yo, 64, 64);
 
-		Font.draw("SHOP", sb, xo + 280, yo + h, 32);
+		Font.draw("WEAPON SHOP", sb, xo + 60, yo + h, 32);
 
-		Font.draw("WEAPONS", sb, xo + 40, yo + h - 45, 24);
-		Font.draw("DEFENCE", sb, xo + 300, yo + h - 45, 24);
-		Font.draw("SPECIAL", sb, xo + 560, yo + h - 45, 24);
+		Font.draw("RUSTY", sb, xo + 50, yo + h - 55, 24);
+		Font.draw("SWORD", sb, xo + 50, yo + h - 95, 24);
+		Font.draw("100", sb, xo + 50, yo + h - 130, 24);
+		sb.draw(coin, xo + 128, yo + h - 137, 32, 32);
+		sb.draw(buy, xo + 35, yo + h - 200, 128, 64);
+		
+		sb.draw(wRustText, xo + 35, yo + 30, 128, 128);
 
-		Font.draw("RUSTY SWORD", sb, xo + 30, yo + h - 85, 16);
-		Font.draw("STEEL SWORD", sb, xo + 30, yo + h - 115, 16);
+		Font.draw("IRON", sb, xo + 230, yo + h - 55, 24);
+		Font.draw("SWORD", sb, xo + 220, yo + h - 95, 24);
+		Font.draw("250", sb, xo + 230, yo + h - 130, 24);
+		sb.draw(coin, xo + 308, yo + h - 137, 32, 32);
+		sb.draw(buy, xo + 210, yo + h - 200, 128, 64);
+		sb.draw(wIronText, xo + 210, yo + 30, 128, 128);
 
-		Font.draw("LEATHER ARMOUR", sb, xo + 270, yo + h - 85, 16);
+		
+		Font.draw("GOLD", sb, xo + 410, yo + h - 55, 24);
+		Font.draw("SWORD", sb, xo + 400, yo + h - 95, 24);
+		Font.draw("400", sb, xo + 410, yo + h - 130, 24);
+		sb.draw(coin, xo + 488, yo + h - 137, 32, 32);
+		sb.draw(buy, xo + 390, yo + h - 200, 128, 64);
+		sb.draw(wGoldText, xo + 390, yo + 30, 128, 128);
 
-		Font.draw("REGENERATE  ", sb, xo + 560, yo + h - 85, 16);
-		Font.draw("ALL HEALTH", sb, xo + 560, yo + h - 115, 16);
-		Font.draw("100", sb, xo + 560, yo + h - 145, 16);
-		sb.draw(coin, xo + 608, yo + h - 147, 16, 16);
-		sb.draw(buy, xo + 625, yo + h - 153, 64, 32);
-
-		Font.draw("KILL ALL", sb, xo + 560, yo + h - 195, 16);
-		Font.draw("ZOMBIES", sb, xo + 560, yo + h - 225, 16);
-		Font.draw("300", sb, xo + 560, yo + h - 255, 16);
-		sb.draw(coin, xo + 608, yo + h - 257, 16, 16);
-		sb.draw(buy, xo + 625, yo + h - 263, 64, 32);
-
-		sb.draw(coin, xo + 680, yo + h - 0, 32, 32);
 
 	}
+	
+	public Rectangle aRust = new Rectangle(120 + 35, 80 + 256 - 200, 128, 64);
+	public Rectangle aIron = new Rectangle(120 + 210, 80 + 256 - 200, 128, 64);
+	public Rectangle aGold = new Rectangle(120 + 390, 80 + 256 - 200, 128, 64);
+	
+	private TextureRegion aRustText = new TextureRegion(Tile.tileSheet, 11 * 8, 3 * 8, 8, 8);
+	private TextureRegion aIronText = new TextureRegion(Tile.tileSheet, 12 * 8, 3 * 8, 8, 8);
+	private TextureRegion aGoldText = new TextureRegion(Tile.tileSheet, 13 * 8, 3 * 8, 8, 8);
+
+	
+	public void renderArmourShop(SpriteBatch sb, GameState gameState) {
+		int w = 512;
+		int h = 360;
+
+		int xo = 120;
+		int yo = 30;
+
+		int wa = w / 64;
+		int ha = h / 64;
+
+		for (int y = 1; y < ha  + 1; y++) {
+			for (int x = 1; x < wa + 1; x++) {
+				sb.draw(guiFill, xo + (x * 64), yo + (y * 64), 64, 64);
+			}
+		}
+
+		for (int x = 1; x < wa; x++) {
+			sb.draw(guiEdge3, xo + x * 64, yo + h, 64, 64);
+			sb.draw(guiEdge4, xo + x * 64, yo, 64, 64);
+		}
+
+		sb.draw(guiEdge3, xo + wa * 64, yo + h, 32, 64);
+		sb.draw(guiEdge4, xo + wa * 64, yo, 32, 64);
+
+		for (int y = 1; y < ha + 1; y++) {
+			sb.draw(guiEdge1, xo, yo + y * 64, 64, 64);
+			sb.draw(guiEdge2, xo + w, yo + y * 64, 64, 64);
+		}
+		sb.draw(guiCorner1, xo, yo + h, 64, 64);
+		sb.draw(guiCorner2, xo + w, yo + h, 64, 64);
+		sb.draw(guiCorner3, xo, yo, 64, 64);
+		sb.draw(guiCorner4, xo + w, yo, 64, 64);
+
+		Font.draw("DEFENCE SHOP", sb, xo + 60, yo + h, 32);
+
+		Font.draw("RUSTY", sb, xo + 50, yo + h - 55, 24);
+		Font.draw("SHIELD", sb, xo + 50, yo + h - 95, 24);
+		Font.draw("100", sb, xo + 50, yo + h - 130, 24);
+		sb.draw(coin, xo + 128, yo + h - 137, 32, 32);
+		sb.draw(buy, xo + 35, yo + h - 200, 128, 64);
+		
+		sb.draw(aRustText, xo + 35, yo + 30, 128, 128);
+
+		Font.draw("IRON", sb, xo + 230, yo + h - 55, 24);
+		Font.draw("SHEILD", sb, xo + 220, yo + h - 95, 24);
+		Font.draw("250", sb, xo + 230, yo + h - 130, 24);
+		sb.draw(coin, xo + 308, yo + h - 137, 32, 32);
+		sb.draw(buy, xo + 210, yo + h - 200, 128, 64);
+		sb.draw(aIronText, xo + 210, yo + 30, 128, 128);
+
+		
+		Font.draw("GOLD", sb, xo + 410, yo + h - 55, 24);
+		Font.draw("SHEILD", sb, xo + 400, yo + h - 95, 24);
+		Font.draw("400", sb, xo + 410, yo + h - 130, 24);
+		sb.draw(coin, xo + 488, yo + h - 137, 32, 32);
+		sb.draw(buy, xo + 390, yo + h - 200, 128, 64);
+		sb.draw(aGoldText, xo + 390, yo + 30, 128, 128);
+
+
+	}
+
 
 }
