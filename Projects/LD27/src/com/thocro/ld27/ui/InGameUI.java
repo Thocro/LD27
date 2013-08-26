@@ -108,6 +108,9 @@ public class InGameUI {
 
 	}
 
+	private TextureRegion music = new TextureRegion(Tile.tileSheet, 16, 8, 8, 8);
+	public Rectangle musicBounds = new Rectangle( Game.WIDTH - 40, Game.HEIGHT - 60, 32, 32);
+
 	public void renderOverlay(SpriteBatch sb, GameState game) {
 		renderHealthBar(sb, game);
 		renderTimeBar(sb, game);
@@ -117,6 +120,8 @@ public class InGameUI {
 			sb.draw(coin, 550, Game.HEIGHT - 60, 32, 32);
 		else
 			sb.draw(coin, 570, Game.HEIGHT - 60, 32, 32);
+
+		sb.draw(music, Game.WIDTH - 40, Game.HEIGHT - 60, 32, 32);
 	}
 
 	private TextureRegion barEdge1 = new TextureRegion(Tile.tileSheet, 9 * 8, 12 * 8, 8, 8);
@@ -208,7 +213,6 @@ public class InGameUI {
 
 	private TextureRegion coin = new TextureRegion(Tile.tileSheet, 4 * 8, 1 * 8, 8, 8);
 	private TextureRegion buy = new TextureRegion(Tile.tileSheet, 4 * 8, 2 * 8, 4 * 8, 2 * 8);
-	
 
 	public Rectangle wRust = new Rectangle(120 + 35, 30 + 360 - 200, 128, 64);
 	public Rectangle wIron = new Rectangle(120 + 210, 30 + 360 - 200, 128, 64);
@@ -218,7 +222,6 @@ public class InGameUI {
 	private TextureRegion wIronText = new TextureRegion(Tile.tileSheet, 12 * 8, 2 * 8, 8, 8);
 	private TextureRegion wGoldText = new TextureRegion(Tile.tileSheet, 13 * 8, 2 * 8, 8, 8);
 
-	
 	public void renderWeaponShop(SpriteBatch sb, GameState gameState) {
 		int w = 512;
 		int h = 360;
@@ -229,7 +232,7 @@ public class InGameUI {
 		int wa = w / 64;
 		int ha = h / 64;
 
-		for (int y = 1; y < ha  + 1; y++) {
+		for (int y = 1; y < ha + 1; y++) {
 			for (int x = 1; x < wa + 1; x++) {
 				sb.draw(guiFill, xo + (x * 64), yo + (y * 64), 64, 64);
 			}
@@ -259,7 +262,7 @@ public class InGameUI {
 		Font.draw("100", sb, xo + 50, yo + h - 130, 24);
 		sb.draw(coin, xo + 128, yo + h - 137, 32, 32);
 		sb.draw(buy, xo + 35, yo + h - 200, 128, 64);
-		
+
 		sb.draw(wRustText, xo + 35, yo + 30, 128, 128);
 
 		Font.draw("IRON", sb, xo + 230, yo + h - 55, 24);
@@ -269,7 +272,6 @@ public class InGameUI {
 		sb.draw(buy, xo + 210, yo + h - 200, 128, 64);
 		sb.draw(wIronText, xo + 210, yo + 30, 128, 128);
 
-		
 		Font.draw("GOLD", sb, xo + 410, yo + h - 55, 24);
 		Font.draw("SWORD", sb, xo + 400, yo + h - 95, 24);
 		Font.draw("400", sb, xo + 410, yo + h - 130, 24);
@@ -277,18 +279,16 @@ public class InGameUI {
 		sb.draw(buy, xo + 390, yo + h - 200, 128, 64);
 		sb.draw(wGoldText, xo + 390, yo + 30, 128, 128);
 
-
 	}
-	
+
 	public Rectangle aRust = new Rectangle(120 + 35, 30 + 360 - 200, 128, 64);
 	public Rectangle aIron = new Rectangle(120 + 210, 30 + 360 - 200, 128, 64);
 	public Rectangle aGold = new Rectangle(120 + 390, 30 + 360 - 200, 128, 64);
-	
+
 	public TextureRegion aRustText = new TextureRegion(Tile.tileSheet, 11 * 8, 3 * 8, 8, 8);
 	public TextureRegion aIronText = new TextureRegion(Tile.tileSheet, 12 * 8, 3 * 8, 8, 8);
 	public TextureRegion aGoldText = new TextureRegion(Tile.tileSheet, 13 * 8, 3 * 8, 8, 8);
 
-	
 	public void renderArmourShop(SpriteBatch sb, GameState gameState) {
 		int w = 512;
 		int h = 360;
@@ -299,7 +299,7 @@ public class InGameUI {
 		int wa = w / 64;
 		int ha = h / 64;
 
-		for (int y = 1; y < ha  + 1; y++) {
+		for (int y = 1; y < ha + 1; y++) {
 			for (int x = 1; x < wa + 1; x++) {
 				sb.draw(guiFill, xo + (x * 64), yo + (y * 64), 64, 64);
 			}
@@ -329,7 +329,7 @@ public class InGameUI {
 		Font.draw("100", sb, xo + 50, yo + h - 130, 24);
 		sb.draw(coin, xo + 128, yo + h - 137, 32, 32);
 		sb.draw(buy, xo + 35, yo + h - 200, 128, 64);
-		
+
 		sb.draw(aRustText, xo + 35, yo + 30, 128, 128);
 
 		Font.draw("IRON", sb, xo + 230, yo + h - 55, 24);
@@ -339,7 +339,6 @@ public class InGameUI {
 		sb.draw(buy, xo + 210, yo + h - 200, 128, 64);
 		sb.draw(aIronText, xo + 210, yo + 30, 128, 128);
 
-		
 		Font.draw("GOLD", sb, xo + 410, yo + h - 55, 24);
 		Font.draw("SHEILD", sb, xo + 400, yo + h - 95, 24);
 		Font.draw("400", sb, xo + 410, yo + h - 130, 24);
@@ -347,8 +346,6 @@ public class InGameUI {
 		sb.draw(buy, xo + 390, yo + h - 200, 128, 64);
 		sb.draw(aGoldText, xo + 390, yo + 30, 128, 128);
 
-
 	}
-
 
 }

@@ -15,7 +15,7 @@ public class Game implements ApplicationListener {
 	public OrthographicCamera camera;
 
 	public static final int WIDTH = 800, HEIGHT = 480;
-	public static final String TITLE = "Untitled Game";
+	public static final String TITLE = "Test Subject 13B - Ludum Dare 27";
 	public static final boolean FULLSCREEN = false;
 
 	public static State currentState;
@@ -38,7 +38,7 @@ public class Game implements ApplicationListener {
 
 	public void render() {
 		update();
-		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
+		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();

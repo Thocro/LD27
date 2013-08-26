@@ -276,11 +276,26 @@ public class GameState implements State, InputProcessor {
 				addZombie(7);
 				addSandWarrior(4);
 				player.money += 40;
-			} else {
+			} else if (currentStage == 4){
 				addZombie(10);
 				addSandWarrior(5);
 				player.money += 50;
-
+			}else if (currentStage == 5){
+				addZombie(12);
+				addSandWarrior(6);
+				player.money += 60;
+			}else if (currentStage == 6){
+				addZombie(15);
+				addSandWarrior(7);
+				player.money += 70;
+			}else if (currentStage == 7){
+				addZombie(17);
+				addSandWarrior(8);
+				player.money += 80;
+			}else{
+				addZombie(20);
+				addSandWarrior(10);
+				player.money += 100;
 			}
 		} else if (currentLevel == 2) {
 			level2.remove(player);
@@ -395,6 +410,10 @@ public class GameState implements State, InputProcessor {
 					System.out.println("Player Bought Gold Sword");
 				}
 			}
+		}
+		if(ui.musicBounds.contains(screenX, screenY)){
+			SoundManager.toggle();
+			System.out.println("Music Toggled");
 		}
 		return false;
 	}

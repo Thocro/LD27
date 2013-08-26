@@ -2,6 +2,7 @@ package com.thocro.ld27.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -52,9 +53,13 @@ public class MainMenu implements State, InputProcessor {
 
 	private Rectangle play = new Rectangle(xo + 130, yo + 150, 128 + 64, 64 + 32);
 	private Rectangle about = new Rectangle(xo + 130, yo + 35, 128 + 64, 64 + 32);
+	
+	public Texture logo = new Texture("textures/title.png");
 
 	public void render(SpriteBatch sb) {
 		renderBG(sb);
+		sb.draw(logo, xo + 100, yo + 275, 256, 128);
+		
 		sb.draw(button, xo + 130, yo + 150, 128 + 64, 64 + 32);
 		Font.draw("PLAY", sb, xo + 147, yo + 180, 32 + 8);
 

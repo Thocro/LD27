@@ -34,17 +34,31 @@ public class StoryManager {
 		if (frame == 6 && game.player.money > 100) {
 			frame++;
 		}
+		if (frame == 1) {
+			if (!count)
+				count = true;
+			if (counter > 0.5f) {
+				if (arrowUp == 10) {
+					arrowUp = 0;
+				} else {
+					arrowUp = 10;
+				}
+				counter -= 0.5f;
+			}
+		}
 
 	}
 
 	private TextureRegion arrow = new TextureRegion(Tile.tileSheet, 3 * 8, 1 * 8, 8, 8);
 
+	int arrowUp;
+
 	public void render(SpriteBatch sb, int xo, int yo) {
 		if (frame == 1) {
 			Font.draw("WELCOME TEST SUBJECT", sb, xo - 0, yo + 55, 16);
-			Font.draw("10S TO OUR NEW TEST!", sb, xo - 0, yo + 30, 16);
+			Font.draw("13B TO OUR NEW TEST!", sb, xo - 0, yo + 30, 16);
 			Font.draw("PRESS SPACE TO CONT", sb, xo - 0, yo + 4, 16);
-			sb.draw(arrow, xo - 100, yo + 100, 128, 128);
+			sb.draw(arrow, xo - 100, yo + 100 + arrowUp, 128, 128);
 
 		} else if (frame == 2) {
 			Font.draw("IN HERE THERE ARE 2", sb, xo - 0, yo + 55, 16);
@@ -72,8 +86,10 @@ public class StoryManager {
 
 	public void keyPressed(int keycode) {
 		if (keycode == Keys.SPACE) {
-			if (frame < 5)
+			if (frame < 5) {
 				frame++;
+				count = false;
+			}
 		}
 	}
 

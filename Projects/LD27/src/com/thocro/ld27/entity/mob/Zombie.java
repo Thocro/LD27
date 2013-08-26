@@ -98,6 +98,7 @@ public class Zombie extends Mob {
 						System.out.println("Hit player");
 						p.health -= (attack - p.defence);
 						attackCounter = true;
+
 						SoundManager.hit.play();
 
 					}

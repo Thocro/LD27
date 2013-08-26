@@ -10,6 +10,8 @@ public class SoundManager {
 	public static Sound zombie1, zombie2, zombie3;
 	public static Music bg1;
 
+	public static boolean play = true;
+
 	public static void load() {
 		hit = Gdx.audio.newSound(Gdx.files.internal("sound/Hit_Hurt2.mp3"));
 		hit2 = Gdx.audio.newSound(Gdx.files.internal("sound/Hit_Hurt3.mp3"));
@@ -20,9 +22,21 @@ public class SoundManager {
 
 		bg1 = Gdx.audio.newMusic(Gdx.files.internal("sound/bg2.mp3"));
 		bg1.setVolume(0.2f);
-		bg1.play();
-		bg1.setLooping(true);
+		if (play) {
+			bg1.play();
+			bg1.setLooping(true);
+		}
 
 	}
 
+	public static void toggle() {
+		play = !play;
+		if(play){
+			bg1.play();
+			bg1.setLooping(true);
+		}else{
+			bg1.stop();
+			bg1.setLooping(false);
+		}
+	}
 }

@@ -20,9 +20,9 @@ public class Player extends Mob {
 	private int currentFrame = 1;
 	public int maxHealth = 200;
 
-	public int weapon, armour;
+	public int weapon = 0, armour = 0;
 
-	public int money = 10;
+	public int money = 0;
 
 	private static TextureRegion tx1 = new TextureRegion(Tile.tileSheet, 0, 4 * 8, 16, 16);
 	private static TextureRegion tx2 = new TextureRegion(Tile.tileSheet, 16, 4 * 8, 16, 16);
